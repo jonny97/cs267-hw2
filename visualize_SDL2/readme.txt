@@ -3,3 +3,6 @@ Warning: This tarball is for SDL2 library and is only tested with Ubuntu. You mi
 Usage:
 1. Run the simulation program with "-o <filename>" option.
 2. Run "visualize <filename>" with the file produced.
+
+To Run: 
+./visualize sample.txt
