@@ -5,7 +5,9 @@
 #
 CC = CC
 MPCC = CC
-OPENMP = -openmp #Note: this is the flag for Intel compilers. Change this to -fopenmp for GNU compilers. See http://www.nersc.gov/users/computational-systems/edison/programming/using-openmp/
+
+#OPENMP = -openmp #Note: this is the flag for Intel compilers. Change this to -fopenmp for GNU compilers. See http://www.nersc.gov/users/computational-systems/edison/programming/using-openmp/
+OPENMP= -fopenmp
 CFLAGS = -O3
 LIBS =
 
@@ -18,8 +20,8 @@ serial: serial.o common.o
 	$(CC) -o $@ $(LIBS) serial.o common.o
 autograder: autograder.o common.o
 	$(CC) -o $@ $(LIBS) autograder.o common.o
-pthreads: pthreads.o common.o
-	$(CC) -o $@ $(LIBS) -lpthread pthreads.o common.o
+pthreads: pthreads.o common.o pthread_barrier.o
+	$(CC) -o $@ $(LIBS) -lpthread pthreads.o common.o pthread_barrier.o
 openmp: openmp.o common.o
 	$(CC) -o $@ $(LIBS) $(OPENMP) openmp.o common.o
 mpi: mpi.o common.o
@@ -37,6 +39,8 @@ mpi.o: mpi.cpp common.h
 	$(MPCC) -c $(CFLAGS) mpi.cpp
 common.o: common.cpp common.h
 	$(CC) -c $(CFLAGS) common.cpp
+pthread_barrier.o: pthread_barrier.c pthread_barrier.h
+	$(CC) -c $(CFLAGS) pthread_barrier.c
 
 clean:
 	rm -f *.o $(TARGETS) *.stdout *.txt

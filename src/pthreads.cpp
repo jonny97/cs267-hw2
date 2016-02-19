@@ -4,6 +4,7 @@
 #include <math.h>
 #include <pthread.h>
 #include "common.h"
+#include "pthread_barrier.h"
 
 //
 //  global variables
