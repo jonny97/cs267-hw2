@@ -1,0 +1,178 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%packages
+\usepackage{amsmath,amssymb,graphicx,amsfonts,psfrag,layout,subfigure,array,longtable,lscape,booktabs,dcolumn,hyperref,multirow}
+\usepackage{tabularx}
+\usepackage[page]{appendix}
+\usepackage{multicol}  
+\usepackage{setspace}
+\usepackage{hyperref, url}
+\usepackage[margin=1in]{geometry} %1 inch margins
+\usepackage{gensymb}
+\usepackage{color}
+\usepackage{alltt}
+
+\usepackage{tikz}
+\usetikzlibrary{calc,matrix,trees,shapes,arrows}
+
+%change encoding
+%\usepackage[utf8]{inputenc}
+
+%Spacing
+\usepackage{setspace}
+\onehalfspacing
+
+%code chunk margins
+\usepackage{listings}
+
+%macros
+\newcommand{\Adv}{{\mathbf{Adv}}}       
+\newcommand{\prp}{{\mathrm{prp}}}                  
+\newcommand{\calK}{{\cal K}}
+\newcommand{\outputs}{{\Rightarrow}}                
+\newcommand{\getsr}{{\:\stackrel{{\scriptscriptstyle\hspace{0.2em}\$}}{\leftarrow}\:}}
+\newcommand{\andthen}{{\::\;\;}}    %  \: \; for thinspace, medspace, thickspace
+\newcommand{\Rand}[1]{{\mathrm{Rand}[{#1}]}}       % A command with one argument
+\newcommand{\Perm}[1]{{\mathrm{Perm}[{#1}]}}       
+\newcommand{\Randd}[2]{{\mathrm{Rand}[{#1},{#2}]}} % and with two arguments
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\DeclareMathOperator*{\plim}{plim}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\newcolumntype{Y}{>{\raggedleft\arraybackslash}X}% raggedleft column X
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\title{CS267 Assignment 2}
+\date{\today}
+\author{Hussain Al Salem \hspace{5mm} Jason Poulos \hspace{5mm} Yang You \vspace{10mm}}
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+In this report, we describe several parallel implementations of a 2D particle simulator and report their performance. The goal is to parallelize code that runs in time $T = O(n)$ on a single processor to run in time $T/p$ when using $p$ processors by taking advantage of shared and distributed memory models. Specifically, we try three implementations: serial code that runs in $O(n)$ time; a MPI distributed memory implementation that runs in $O(n)$ time and $O(n/p$) scaling; and a OpenMP shared memory implementation. For Part 2 of the assignment, we implement in GPU. 
+
+\section{Serial Implementation}
+
+\subsection{Data structures}
+Describe the serial structures used to achieve $O(n)$. 
+
+\subsection{Results}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{serial-on.png}
+  \caption{A plot in log-log scale that shows that serial and parallel codes run in O(n) time.}
+  \label{fig:serial-on}
+\end{figure}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{serial-peak.png}
+  \caption{A plot in log-linear scale that shows performance as a percent of peak performance for different numbers of processors.}
+  \label{fig:serial-peak}
+\end{figure}
+
+\section{OpenMP implementation}
+
+\subsection{Synchronization}
+A description of the synchronization you used in the shared memory implementation.
+
+\subsection{Results}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{openmp-on.png}
+  \caption{$O(n)$ scaling of the OpenMP implementation.}
+  \label{fig:openmp-on}
+\end{figure}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{openmp-weak.png}
+  \caption{Weak scaling of the OpenMP implementation.}
+  \label{fig:openmp-weak}
+\end{figure}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{openmp-strong.png}
+  \caption{Strong scaling of the OpenMP implementation.}
+  \label{fig:openmp-strong}
+\end{figure}
+
+\section{MPI Implementation}
+
+\subsection{Communication between nodes}
+A description of the communication you used in the distributed memory implementation.
+
+\subsection{Results}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{mpi-on.png}
+  \caption{$O(n)$ scaling of the MPI implementation.}
+  \label{fig:mpi-on}
+\end{figure}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{mpi-weak.png}
+  \caption{Weak scaling of the MPI implementation.}
+  \label{fig:mpi-weak}
+\end{figure}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{mpi-strong.png}
+  \caption{Strong scaling of the MPI implementation.}
+  \label{fig:mpi-strong}
+\end{figure}
+
+\section{Comparison of distributed and shared implementations}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{speedup.png}
+  \caption{Speedup plots that show how closely parallel codes approach the idealized $p$-times speedup.}
+  \label{fig:speedup}
+\end{figure}
+
+\subsection{Where does the time go?}
+Consider breaking down the runtime into computation time, synchronization time and/or communication time. How do they scale with $p$?
+
+\subsection{Discussion}
+
+A description of the design choices that you tried and how did they affect the performance.
+
+A discussion on whether it is possible to do better
+
+A discussion on using pthreads, OpenMP and MPI.
+
+\section{GPU Implementation} \label{GPU}
+
+A description of any synchronization needed
+A description of any GPU-specific optimizations you tried
+
+\subsection{Results}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{gpu-speedup.png}
+  \caption{A plot of the speedup of the GPU code versus the serial, openmp, mpi runs on the CPU of the node}
+  \label{fig:gpu-speedup}
+\end{figure}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{gpu-naive}
+  \caption{A plot in log-log scale that shows the performance of your code versus the naive GPU code.}
+  \label{fig:gpu-naive}
+\end{figure}
+
+\subsection{Discussion}
+
+A discussion on the strengths and weaknesses of CUDA and the current GPU architecture
+
+
+%Appendix
+%\pagebreak
+%\begin{appendices}
+%
+%\end{appendices}
+
+\end{document}

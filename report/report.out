@@ -1,0 +1,16 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.2}{Serial Implementation}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Data structures}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Results}{section.2}% 4
+\BOOKMARK [1][-]{section.3}{OpenMP implementation}{}% 5
+\BOOKMARK [2][-]{subsection.3.1}{Synchronization}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.2}{Results}{section.3}% 7
+\BOOKMARK [1][-]{section.4}{MPI Implementation}{}% 8
+\BOOKMARK [2][-]{subsection.4.1}{Communication between nodes}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.2}{Results}{section.4}% 10
+\BOOKMARK [1][-]{section.5}{Comparison of distributed and shared implementations}{}% 11
+\BOOKMARK [2][-]{subsection.5.1}{Where does the time go?}{section.5}% 12
+\BOOKMARK [2][-]{subsection.5.2}{Discussion}{section.5}% 13
+\BOOKMARK [1][-]{section.6}{GPU Implementation}{}% 14
+\BOOKMARK [2][-]{subsection.6.1}{Results}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.2}{Discussion}{section.6}% 16
