@@ -6,14 +6,6 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 
-#if defined(__APPLE__)
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
-#else
-#include <GL/gl.h>
-#include <GL/glu.h>
-#endif
-
 #define DEFAULT_FILENAME "sample.txt"
 #define eps 0.1
 #define SCALE 200
@@ -40,6 +32,12 @@ double read_timer( )
 
 void make_surface( int sx, int sy )
 {
+    if( SDL_SetVideoMode( sx, sy, 16, SDL_OPENGL | SDL_RESIZABLE ) == NULL )
+    {
+        printf( "SDL_SetVideoMode failed: %s\n", SDL_GetError( ) );
+        exit( 1 );
+    }
+	
     glEnable( GL_POINT_SMOOTH );
     glEnable( GL_BLEND );
     glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
@@ -88,14 +86,9 @@ int main( int argc, char *argv[] )
         printf( "SDL_Init failed: %s\n", SDL_GetError( ) );
         return 1;
     }
-	SDL_Window *window =  SDL_CreateWindow( "CS267 Particle Simulation", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, window_size, window_size, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
-    if( window == NULL )
-    {
-        printf( "SDL_SetVideoMode failed: %s\n", SDL_GetError( ) );
-        exit( 1 );
-    }
-    SDL_GLContext glcontext = SDL_GL_CreateContext(window);
+	
     make_surface( window_size, window_size );
+	
     for( bool done = false; !done; )
     {
         SDL_Event event;
@@ -103,8 +96,8 @@ int main( int argc, char *argv[] )
         {
             if( ( event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE ) || ( event.type == SDL_QUIT ) )
                 done = true;
-            else if( event.window.event == SDL_WINDOWEVENT_RESIZED )
-                make_surface( event.window.data1, event.window.data2 );
+            else if( event.type == SDL_VIDEORESIZE )
+                make_surface( event.resize.w, event.resize.h );
         }
 		
         glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -130,9 +123,9 @@ int main( int argc, char *argv[] )
             glVertex2fv( &p[i].x );
         glEnd( );
 		
-        SDL_GL_SwapWindow(window);
+        SDL_GL_SwapBuffers ();
     }
-	SDL_GL_DeleteContext(glcontext);
+	
     SDL_Quit();
 	
     return 0;

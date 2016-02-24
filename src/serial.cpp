@@ -4,6 +4,8 @@
 #include <math.h>
 #include "common.h"
 
+extern int num_bins;
+
 //
 //  benchmarking program
 //
@@ -22,7 +24,7 @@ int main( int argc, char **argv )
         printf( "-no turns off all correctness checks and particle output\n");
         return 0;
     }
-    
+
     int n = read_int( argc, argv, "-n", 1000 );
 
     char *savename = read_string( argc, argv, "-o", NULL );
@@ -32,34 +34,60 @@ int main( int argc, char **argv )
     FILE *fsum = sumname ? fopen ( sumname, "a" ) : NULL;
 
     particle_t *particles = (particle_t*) malloc( n * sizeof(particle_t) );
-    set_size( n );
+
+
+    int sy = sizeof(int);
+//    printf("%i\n", sy);
+
+    set_size( n );                          // set size to sqrt(density==0.0005*n==500) used to initialize position of the particles in next step
+    bin_dict* bins = (bin_dict*) malloc(num_bins * sizeof(bin_dict));
+    FOR (i, num_bins)
+        bins[i].particle_ids = (int*) malloc(n*sizeof(int));
+    init_bins(bins);
+
+
     init_particles( n, particles );
-    
+    FOR (i, n)
+        move_v2(particles[i], i);   // assign each particle to a bin
+
+    binning(particles, bins, n);    // calculate number of particles in each bin
+
     //
     //  simulate a number of time steps
     //
-    double simulation_time = read_timer( );
+    double simulation_time = read_timer( ); // reads time using function in commons.cpp
 	
-    for( int step = 0; step < NSTEPS; step++ )
+    FOR(step, NSTEPS)
     {
-	navg = 0;
-        davg = 0.0;
-	dmin = 1.0;
         //
         //  compute forces
         //
-        for( int i = 0; i < n; i++ )
-        {
-            particles[i].ax = particles[i].ay = 0;
-            for (int j = 0; j < n; j++ )
-				apply_force( particles[i], particles[j],&dmin,&davg,&navg);
+	    FOR(i, n){
+            particles[i].ax = 0;    // initialize acceleration after each step
+            particles[i].ay = 0;    // initialize acceleration after each step
         }
+
+        FOR(i, num_bins){
+            apply_force_bin(particles, bins, i);    // apply forces in particles for bin by bin with only neighboring bins
+        }
+
+        if (find_option( argc, argv, "-no" ) == -1) {
+            navg = 0;
+            davg = 0.0;
+            dmin = 1.0;
+
+            FOR(i, num_bins) // get statistics bin by bin instead of particle by particle
+                get_statistics_bin(particles, bins, i, &dmin, &davg, &navg);
+        }
+
  
         //
         //  move particles
         //
         for( int i = 0; i < n; i++ ) 
-            move( particles[i] );		
+            move_v2( particles[i], i );
+
+        binning(particles, bins, n);            // reset number of particles in each bin and calculate again
 
         if( find_option( argc, argv, "-no" ) == -1 )
         {
