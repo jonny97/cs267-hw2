@@ -1,16 +1,14 @@
 CC = g++
 
 OSTYPE = $(shell uname -s)
-ifeq ($(OSTYPE), darwin15)
-  ### Old configurations for the old SDL for Mac. Change for SDL2 here ###
-  INCLUDES =  -I/usr/local/include -L/usr/local/lib 
-  LIBS = -lSDLmain -lSDL -lSDL2
+ifeq ($(OSTYPE), Darwin)
+  INCLUDES = -I/Library/Frameworks/SDL.framework/Versions/A/Headers/ -L/opt/local/lib
+  LIBS = -lSDLmain -lSDL
   FRAMEWORKS = -framework SDL -framework OpenGL -framework Cocoa
 else
-  ### Configurations for SDL2 for Ubuntu -- Tested with Ubuntu 14.04 ###
-  INCLUDES = -I/usr/local/include -I/usr/local/include/SDL2 -L/usr/local/lib 
-  LIBS = -lSDL2main -lSDL2 -framework OpenGL
-  FRAMEWORKS = 
+  INCLUDES = -I/usr/include/SDL
+  LIBS = -lSDLmain -lSDL -lGL -lGLU
+  FRAMEWORKS =
 endif
 
 visualize: visualize.cpp

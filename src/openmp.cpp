@@ -3,7 +3,11 @@
 #include <assert.h>
 #include <math.h>
 #include "common.h"
+<<<<<<< HEAD
 #include "/usr/local/Cellar/gcc49/4.9.3/lib/gcc/4.9/gcc/x86_64-apple-darwin15.2.0/4.9.3/include/omp.h"
+=======
+#include "/opt/local/lib/gcc48/gcc/x86_64-apple-darwin15/4.8.5/include/omp.h"
+>>>>>>> origin/hussain_branch
 
 //
 //  benchmarking program
