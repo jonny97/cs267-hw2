@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <math.h>
 #include "common.h"
-#include "omp.h"
+#include "/usr/local/Cellar/gcc49/4.9.3/lib/gcc/4.9/gcc/x86_64-apple-darwin15.2.0/4.9.3/include/omp.h"
 
 //
 //  benchmarking program
