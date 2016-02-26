@@ -1,9 +1,0 @@
-Serial code first - H
-
-MPI -Y 
-
-Shared Memory - J
-	Select P-thread or OpenMP
-	*P-threads works on local machine
-	*OpenMP on Edison, transfer script and run visualization on Mac
-	Put Latex template on Github
