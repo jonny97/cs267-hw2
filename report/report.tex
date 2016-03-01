@@ -60,20 +60,15 @@ In this report, we describe several parallel implementations of a 2D particle si
 \section{Serial Implementation}
 
 \subsection{Data structures}
-Describe the serial structures used to achieve $O(n)$. 
+Our serial implementation uses a binning structure to execute the interaction step in $O(n)$ time. The 2D grid is divided into small squared bins where each side has the size of cutoff. The size of cutoff was used since it is the maximum distance of interaction. Thus, each particle can only interact with particles in its own square and its 8 neighboring squares on a single iteration. Furthermore, bins that are attached to the edges will have less neighbors and thus they were fixed accordingly. The small bins are stored in a data structure type where each bin has a unique consecutive index. Each bin points to the particles indices contained inside the bin. After each iteration, we empty the bins and update them according to the new particle locations. In the interaction step, each particle only need to check for particles within its bin and neighboring bins. Since the number of particles per square is bound (and equal to 1 on average), the interaction step takes $O(n)$ time.
 
 \subsection{Results}
+Figure \ref{fig:serial-on} shows that our serial binning algorithm follows linear scaling ($O(n)$). For comparison, it shows the performance of the naive $O(n^2)$ algorithm on smaller problems.
 
 \begin{figure}
-%  \includegraphics[width=\textwidth]{serial-on.png}
-  \caption{A plot in log-log scale that shows that serial and parallel codes run in O(n) time.}
+ \includegraphics[width=\textwidth]{graphs/serial_binning_vs_naive.png}
+  \caption{A plot in log-log scale that shows serial without binning runs on $O(n^2)$ time and serial with binning runs in $O(n)$ time.}
   \label{fig:serial-on}
-\end{figure}
-
-\begin{figure}
-%  \includegraphics[width=\textwidth]{serial-peak.png}
-  \caption{A plot in log-linear scale that shows performance as a percent of peak performance for different numbers of processors.}
-  \label{fig:serial-peak}
 \end{figure}
 
 \section{OpenMP implementation}
@@ -82,6 +77,12 @@ Describe the serial structures used to achieve $O(n)$.
 A description of the synchronization you used in the shared memory implementation.
 
 \subsection{Results}
+
+\begin{figure}
+%  \includegraphics[width=\textwidth]{serial-peak.png}
+  \caption{A plot in log-linear scale that shows performance as a percent of peak performance for different numbers of processors.}
+  \label{fig:serial-peak}
+\end{figure}
 
 \begin{figure}
 %  \includegraphics[width=\textwidth]{openmp-on.png}
