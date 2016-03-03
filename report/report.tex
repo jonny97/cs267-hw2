@@ -79,27 +79,21 @@ A description of the synchronization you used in the shared memory implementatio
 \subsection{Results}
 
 \begin{figure}
-%  \includegraphics[width=\textwidth]{serial-peak.png}
-  \caption{A plot in log-linear scale that shows performance as a percent of peak performance for different numbers of processors.}
-  \label{fig:serial-peak}
-\end{figure}
-
-\begin{figure}
-%  \includegraphics[width=\textwidth]{openmp-on.png}
-  \caption{$O(n)$ scaling of the OpenMP implementation.}
+\includegraphics[width=\textwidth]{graphs/serial_binning_vs_openMP_12thr.png}
+  \caption{$O(n)$ scaling of the OpenMP implementation with 12 threads compared to the serial implementation.}
   \label{fig:openmp-on}
 \end{figure}
 
 \begin{figure}
-%  \includegraphics[width=\textwidth]{openmp-weak.png}
-  \caption{Weak scaling of the OpenMP implementation.}
-  \label{fig:openmp-weak}
+\includegraphics[width=\textwidth]{graphs/openmp_strong_scaling.png}
+  \caption{Strong scaling of the OpenMP implementation.}
+  \label{fig:openmp-strong}
 \end{figure}
 
 \begin{figure}
-%  \includegraphics[width=\textwidth]{openmp-strong.png}
-  \caption{Strong scaling of the OpenMP implementation.}
-  \label{fig:openmp-strong}
+\includegraphics[width=\textwidth]{graphs/weak_scaling.png}
+  \caption{Weak scaling of the OpenMP implementation.}
+  \label{fig:openmp-weak}
 \end{figure}
 
 \section{MPI Implementation}
