@@ -518,6 +518,7 @@ int main( int argc, char **argv )
         //
         //  save if necessary
         //
+	#pragma omp master
         if( fsave && (step%SAVEFREQ) == 0 )
           save2( fsave, n, particles );
       }
