@@ -74,7 +74,9 @@ Figure \ref{fig:serial-on} shows that our serial binning algorithm follows linea
 \section{OpenMP implementation}
 
 \subsection{Synchronization}
-A description of the synchronization you used in the shared memory implementation.
+%A description of the synchronization you used in the shared memory implementation.
+
+We implement OpenMP for shared memory parallelization. Synchronization is used after each parallel block. We assign each particle to bins in parallel, assign each bin to a lock In order to prevent race conditions, and then unlock each bin. Bin sizes are about equal to the given cutoff size for particle interaction. Thus, the number of bins is generally higher than the number of particles. When we compute forces in each bin in parallel, there will be little contention in most bins because they are empty or relatively sparse. Lastly, we move each particle and clear each bin in parallel for the next timestep. 
 
 \subsection{Results}
 
