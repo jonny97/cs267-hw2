@@ -80,6 +80,8 @@ We implement OpenMP for shared memory parallelization. Synchronization is used a
 
 \subsection{Results}
 
+Figure \ref{fig:openmp-on} shows considerable speedup of our OpenMP implementation compared to serial binning. The simulation time for OpenMP is eight times faster as the number of particles reaches 250,000. Figure \ref{fig:openmp-strong} shows the strong scaling of our OpenMP implementation, or how the simulation time varies with the number of threads for a fixed total problem size. OpenMP scales as the number of particles exceeds 32,000. Figure \ref{fig:openmp-weak} shows the weak scaling of OpenMP, or how the computation time varies with the number of threads for a fixed problem size per thread. OpenMP follows linear scaling at 4,000 particles per thread.
+
 \begin{figure}
 \includegraphics[width=\textwidth]{graphs/serial_binning_vs_openMP_12thr.png}
   \caption{$O(n)$ scaling of the OpenMP implementation with 12 threads compared to the serial implementation.}
