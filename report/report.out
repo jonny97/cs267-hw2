@@ -8,9 +8,8 @@
 \BOOKMARK [1][-]{section.4}{MPI Implementation}{}% 8
 \BOOKMARK [2][-]{subsection.4.1}{Communication between nodes}{section.4}% 9
 \BOOKMARK [2][-]{subsection.4.2}{Results}{section.4}% 10
-\BOOKMARK [1][-]{section.5}{Comparison of distributed and shared implementations}{}% 11
-\BOOKMARK [2][-]{subsection.5.1}{Where does the time go?}{section.5}% 12
-\BOOKMARK [2][-]{subsection.5.2}{Discussion}{section.5}% 13
-\BOOKMARK [1][-]{section.6}{GPU Implementation}{}% 14
-\BOOKMARK [2][-]{subsection.6.1}{Results}{section.6}% 15
-\BOOKMARK [2][-]{subsection.6.2}{Discussion}{section.6}% 16
+\BOOKMARK [2][-]{subsection.4.3}{Discussion}{section.4}% 11
+\BOOKMARK [1][-]{section.5}{GPU Implementation}{}% 12
+\BOOKMARK [2][-]{subsection.5.1}{Synchronization and GPU-specific optimizations}{section.5}% 13
+\BOOKMARK [2][-]{subsection.5.2}{Results}{section.5}% 14
+\BOOKMARK [2][-]{subsection.5.3}{Discussion}{section.5}% 15

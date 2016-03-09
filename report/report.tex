@@ -105,7 +105,7 @@ Figure \ref{fig:openmp-strong} shows the strong scaling of our OpenMP implementa
 \section{MPI Implementation}
 
 \subsection{Communication between nodes}
-A description of the communication you used in the distributed memory implementation.
+%A description of the communication you used in the distributed memory implementation.
 
 \subsection{Results}
 
@@ -127,47 +127,48 @@ A description of the communication you used in the distributed memory implementa
   \label{fig:mpi-strong}
 \end{figure}
 
-\section{Comparison of distributed and shared implementations}
-
-\begin{figure}
-%  \includegraphics[width=\textwidth]{speedup.png}
-  \caption{Speedup plots that show how closely parallel codes approach the idealized $p$-times speedup.}
-  \label{fig:speedup}
-\end{figure}
-
-\subsection{Where does the time go?}
-Consider breaking down the runtime into computation time, synchronization time and/or communication time. How do they scale with $p$?
-
 \subsection{Discussion}
 
-A description of the design choices that you tried and how did they affect the performance.
+%\begin{figure}
+%  \includegraphics[width=\textwidth]{speedup.png}
+%  \caption{Speedup plots that show how closely parallel codes approach the idealized $p$-times speedup.}
+%  \label{fig:speedup}
+%\end{figure}
 
-A discussion on whether it is possible to do better
+%A description of the design choices that you tried and how did they affect the performance.
 
-A discussion on using pthreads, OpenMP and MPI.
+%A discussion on whether it is possible to do better
+
+%A discussion on using pthreads, OpenMP and MPI.
 
 \section{GPU Implementation} \label{GPU}
 
-A description of any synchronization needed
-A description of any GPU-specific optimizations you tried
+\subsection{Synchronization and GPU-specific optimizations}
+%A description of any synchronization needed
+%A description of any GPU-specific optimizations you tried
 
 \subsection{Results}
 
-\begin{figure}
+%\begin{figure}
 %  \includegraphics[width=\textwidth]{gpu-speedup.png}
-  \caption{A plot of the speedup of the GPU code versus the serial, openmp, mpi runs on the CPU of the node}
-  \label{fig:gpu-speedup}
-\end{figure}
+%  \caption{A plot of the speedup of the GPU code versus the serial, openmp, mpi runs on the CPU of the node}
+%  \label{fig:gpu-speedup}
+%\end{figure}
 
 \begin{figure}
-%  \includegraphics[width=\textwidth]{gpu-naive}
-  \caption{A plot in log-log scale that shows the performance of your code versus the naive GPU code.}
+ \includegraphics[width=\textwidth]{graphs/gpu_binning_vs_gpu_serial.png}
+  \caption{Performance of GPU with binning versus the naive GPU code.}
   \label{fig:gpu-naive}
 \end{figure}
 
-\subsection{Discussion}
+\begin{figure}
+ \includegraphics[width=\textwidth]{graphs/serial_openmp_gpu.png}
+  \caption{Performance of GPU with binning versus serial with binning and parallelized OpenMP.}
+  \label{fig:gpu-compare}
+\end{figure}
 
-A discussion on the strengths and weaknesses of CUDA and the current GPU architecture
+\subsection{Discussion}
+%A discussion on the strengths and weaknesses of CUDA and the current GPU architecture
 
 
 %Appendix
