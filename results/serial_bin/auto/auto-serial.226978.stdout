@@ -1,0 +1,11 @@
+n = 5000, simulation time = 0.654401 seconds
+n = 10000, simulation time = 1.47148 seconds
+n = 20000, simulation time = 3.24853 seconds
+n = 40000, simulation time = 8.3011 seconds
+n = 80000, simulation time = 22.0508 seconds
+
+Serial code is O(N^slope)
+Slope estimates are : 1.169021 1.142519 1.353515 1.409457
+Slope estimate for line fit is: 1.264506
+
+
