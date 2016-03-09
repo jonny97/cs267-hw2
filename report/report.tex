@@ -13,6 +13,7 @@
 \usepackage{gensymb}
 \usepackage{color}
 \usepackage{alltt}
+\usepackage{courier}
 
 \usepackage{tikz}
 \usetikzlibrary{calc,matrix,trees,shapes,arrows}
@@ -66,7 +67,8 @@ Our serial implementation uses a binning structure to execute the interaction st
 Figure \ref{fig:serial-on} shows that our serial binning algorithm follows linear scaling ($O(n)$). For comparison, it shows the performance of the naive $O(n^2)$ algorithm on smaller problems.
 
 \begin{figure}
- \includegraphics[width=\textwidth]{graphs/serial_binning_vs_naive.png}
+	\centering
+ \includegraphics[width=0.8\textwidth]{graphs/serial_binning_vs_naive.png}
   \caption{A plot in log-log scale that shows serial without binning runs on $O(n^2)$ time and serial with binning runs in $O(n)$ time.}
   \label{fig:serial-on}
 \end{figure}
@@ -82,30 +84,33 @@ We implement OpenMP for shared memory parallelization. Synchronization is used a
 
 Figure \ref{fig:openmp-on} shows considerable speedup of our OpenMP implementation compared to serial binning using 12 threads. We compare based on 12 threads based on the strong scaling measurements in Figure \ref{fig:openmp-strong}. On average, the maximum speed is achieved with 12 threads for number of particles between 500 to 128,000. Four threads is faster below this range, and 24 threads is faster above this range. The simulation time for OpenMP is $O(n^{0.916})$, while the serial is $O(n^{1.256})$. 
 
-Figure \ref{fig:openmp-strong} shows the strong scaling of our OpenMP implementation, or how the simulation time varies with the number of threads for a fixed total problem size. OpenMP scales as the number of particles exceeds 32,000. Figure \ref{fig:openmp-weak} shows the weak scaling of OpenMP, or how the computation time varies with the number of threads for a fixed problem size per thread. The slope of the linear scaling at 4,000 particles per thread is 0.088, whereas a slope of 0 would indicate that our code is flawless. There is more communication as the number of threads increases, which explains why the slope is not exactly 0.
-
 \begin{figure}
-\includegraphics[width=\textwidth]{graphs/serial_binning_vs_openMP_12thr.png}
+	\centering
+\includegraphics[width=0.8\textwidth]{graphs/serial_binning_vs_openMP_12thr.png}
   \caption{$O(n)$ scaling of the OpenMP implementation with 12 threads compared to the serial implementation.}
   \label{fig:openmp-on}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\textwidth]{graphs/openmp_strong_scaling.png}
+	\centering
+\includegraphics[width=0.8\textwidth]{graphs/openmp_strong_scaling.png}
   \caption{Strong scaling of the OpenMP implementation.}
   \label{fig:openmp-strong}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\textwidth]{graphs/weak_scaling.png}
+	\centering
+\includegraphics[width=0.8\textwidth]{graphs/weak_scaling.png}
   \caption{Weak scaling of the OpenMP implementation.}
   \label{fig:openmp-weak}
 \end{figure}
 
+Figure \ref{fig:openmp-strong} shows the strong scaling of our OpenMP implementation, or how the simulation time varies with the number of threads for a fixed total problem size. OpenMP scales as the number of particles exceeds 32,000. Figure \ref{fig:openmp-weak} shows the weak scaling of OpenMP, or how the computation time varies with the number of threads for a fixed problem size per thread. The slope of the linear scaling at 4,000 particles per thread is 0.088, whereas a slope of 0 would indicate that our code is flawless. There is more communication as the number of threads increases, which explains why the slope is not exactly 0.
+
 \section{MPI Implementation}
 
 \subsection{Communication between nodes}
-%A description of the communication you used in the distributed memory implementation.
+A description of the communication you used in the distributed memory implementation.
 
 \subsection{Results}
 
@@ -143,32 +148,41 @@ Figure \ref{fig:openmp-strong} shows the strong scaling of our OpenMP implementa
 
 \section{GPU Implementation} \label{GPU}
 
-\subsection{Synchronization and GPU-specific optimizations}
-%A description of any synchronization needed
-%A description of any GPU-specific optimizations you tried
+In order to reduce simulation time from $O(n^2)$ to $O(n)$, the GPU implementation must support binning. In serial binning, resizable vectors were used to store particles in each bin, but resizing is not supported on the GPU. Therefore, a fixed sized memory allocation was used to store the particles. For this implementation, we chose 32 particles per bin. We also maintained two extra 32-element arrays with the \texttt{bin\_t} structure: \texttt{staying} and \texttt{leaving}. These are used for rebinning when moving particles.
+
+Initially, each particle is assigned to a bin on the driver. Computing the forces occurs in parallel on the GPU, with one thread per bin. Each thread computes the forces between all particles in its bin and each adjacent bin.
+
+The next step is moving particles. This occurs in two steps both of which occur in parallel with one thread per bin. First, each thread moves each particle in its bin by calling \texttt{move\_particle\_gpu}. It then checks with the particle remains in the bin. If it does, it is added to the bin's \texttt{staying} array; otherwise it goes to the \texttt{leaving} array. Second, each thread consolidates the remaining particles in it bin and the outgoing particles destined to the current bin from neighboring bins. This is done by looping over all particles in the \texttt{leaving} arrays.
+
+This method led to adding an extra global synchronization step due to splitting the move operation into two kernels, but it avoids the need for locking since there are no read-write conflicts on the same data. In the first step, each thread only reads and writes its bin, while in the second step, each thread reads neighbors' particle lists but only writes to its bin's \texttt{staying} and \texttt{leaving} arrays, leaving the main particle list uncontended.
+
+Before that, we tried avoiding the need to maintain bins by removing the explicit bins entirely and instead computing the bin of each particle on the fly based on its position. This simplified the move step, since it avoided explicit rebinning. However, it required each thread to examine every particle during the force computation step, which turned out to be orders of magnitude slower than examining only neighboring bins.
 
 \subsection{Results}
 
-%\begin{figure}
-%  \includegraphics[width=\textwidth]{gpu-speedup.png}
-%  \caption{A plot of the speedup of the GPU code versus the serial, openmp, mpi runs on the CPU of the node}
-%  \label{fig:gpu-speedup}
-%\end{figure}
-
 \begin{figure}
- \includegraphics[width=\textwidth]{graphs/gpu_binning_vs_gpu_serial.png}
-  \caption{Performance of GPU with binning versus the naive GPU code.}
-  \label{fig:gpu-naive}
-\end{figure}
-
-\begin{figure}
- \includegraphics[width=\textwidth]{graphs/serial_openmp_gpu.png}
-  \caption{Performance of GPU with binning versus serial with binning and parallelized OpenMP.}
+  \centering
+  \includegraphics[width=0.8\textwidth]{graphs/gpu_binning_vs_gpu_serial.png}
+  \caption{Log-log scale plot that shows GPU with binning versus GPU with binning performance.}
   \label{fig:gpu-compare}
 \end{figure}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{graphs/serial_openmp_gpu.png}
+  \caption{Log-log scale plot that shows Serial with binning, GPU with binning and OpenMP performance.}
+  \label{fig:gpu-all}
+\end{figure}
+
+We benchmarked the the GPU Naive Code and our GPU binning implementation on the Stampede GPU architecture. Figure~\ref{fig:gpu-compare} shows that our implementation is $O(n^{0.8673})$ fast compared to the naive GPU implementation which is $O(n^{1.3691})$ fast. Figure~~\ref{fig:gpu-all} shows that the GPU code has slightly better performance than the OpenMP. The GPU code is $O(n^{0.8673})$ fast while the OpenMP code is $O(n^{0.9161})$ fast. 
+
 \subsection{Discussion}
-%A discussion on the strengths and weaknesses of CUDA and the current GPU architecture
+
+Though CUDA allows writing GPU code in a subset of C, its libraries provide much less functionality than STL. In particular, there is no resizable, concurrent vector data structure, which would have made the particle simulation code much simpler to write, though slower than the lock-free approach we ultimately settled on.
+
+Additionally, the GPU architecture is well-suited for high-intensity applications, but binning substantially increased the memory bandwidth needs of our particle simulator, lowering its intensity and reducing the speedup due to the GPU.
+
+We therefore conclude that, for applications like particle simulation, the performance gains of utilizing the GPU are not worth the substantially increased programming effort compared to OpenMP, which required only a few lines of modifications to the serial code.
 
 
 %Appendix
