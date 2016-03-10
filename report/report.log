@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  8 MAR 2016 22:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  10 MAR 2016 07:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -981,13 +981,13 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 56.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<graphs/serial_binning_vs_naive.png, id=68, 765.5802pt x 524.6802pt>
+<graphs/serial_binning_vs_naive.png, id=64, 765.5802pt x 524.6802pt>
 File: graphs/serial_binning_vs_naive.png Graphic file (type png)
 
 <use graphs/serial_binning_vs_naive.png>
 Package pdftex.def Info: graphs/serial_binning_vs_naive.png used on input line 
 71.
-(pdftex.def)             Requested size: 375.80544pt x 257.5519pt.
+(pdftex.def)             Requested size: 469.75502pt x 321.94386pt.
  [1
 Non-PDF special ignored!
 
@@ -996,95 +996,118 @@ LaTeX Font Info:    Try loading font information for OT1+pcr on input line 81.
  (/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [2 <./graphs/serial_binning_vs_naive.png>]
-<graphs/serial_binning_vs_openMP_12thr.png, id=89, 765.5802pt x 524.6802pt>
+<graphs/serial_binning_vs_openMP_12thr.png, id=85, 765.5802pt x 524.6802pt>
 File: graphs/serial_binning_vs_openMP_12thr.png Graphic file (type png)
 
 <use graphs/serial_binning_vs_openMP_12thr.png>
 Package pdftex.def Info: graphs/serial_binning_vs_openMP_12thr.png used on inpu
 t line 89.
-(pdftex.def)             Requested size: 375.80544pt x 257.5519pt.
+(pdftex.def)             Requested size: 469.75502pt x 321.94386pt.
 
-<graphs/openmp_strong_scaling.png, id=90, 705.3552pt x 483.7272pt>
+<graphs/openmp_strong_scaling.png, id=86, 705.3552pt x 483.7272pt>
 File: graphs/openmp_strong_scaling.png Graphic file (type png)
 
 <use graphs/openmp_strong_scaling.png>
 Package pdftex.def Info: graphs/openmp_strong_scaling.png used on input line 96
 .
-(pdftex.def)             Requested size: 375.80544pt x 257.72493pt.
+(pdftex.def)             Requested size: 469.75502pt x 322.15431pt.
 
-<graphs/weak_scaling.png, id=91, 705.837pt x 483.7272pt>
+<graphs/weak_scaling.png, id=87, 705.837pt x 483.7272pt>
 File: graphs/weak_scaling.png Graphic file (type png)
 
 <use graphs/weak_scaling.png>
 Package pdftex.def Info: graphs/weak_scaling.png used on input line 103.
-(pdftex.def)             Requested size: 375.80544pt x 257.55516pt.
+(pdftex.def)             Requested size: 469.75502pt x 321.94026pt.
  [3 <./graphs/serial_binning_vs_openMP_12thr.png>] [4 <./graphs/openmp_strong_s
-caling.png> <./graphs/weak_scaling.png>] [5]
-<graphs/gpu_binning_vs_gpu_serial.png, id=116, 749.6808pt x 551.1792pt>
+caling.png>] [5 <./graphs/weak_scaling.png>]
+<graphs/MPI_speedup.png, id=114, 851.8224pt x 521.7894pt>
+File: graphs/MPI_speedup.png Graphic file (type png)
+
+<use graphs/MPI_speedup.png>
+Package pdftex.def Info: graphs/MPI_speedup.png used on input line 129.
+(pdftex.def)             Requested size: 469.75502pt x 287.74939pt.
+
+<graphs/MPI_weak_scaling.png, id=115, 729.927pt x 458.6736pt>
+File: graphs/MPI_weak_scaling.png Graphic file (type png)
+
+<use graphs/MPI_weak_scaling.png>
+Package pdftex.def Info: graphs/MPI_weak_scaling.png used on input line 136.
+(pdftex.def)             Requested size: 469.75502pt x 295.1878pt.
+
+<graphs/MPI_strong_scaling.png, id=116, 836.4048pt x 458.6736pt>
+File: graphs/MPI_strong_scaling.png Graphic file (type png)
+
+<use graphs/MPI_strong_scaling.png>
+Package pdftex.def Info: graphs/MPI_strong_scaling.png used on input line 142.
+(pdftex.def)             Requested size: 469.75502pt x 257.61133pt.
+
+<graphs/serialbinning_vs_openmp_vs_MPI.png, id=117, 917.829pt x 545.8794pt>
+File: graphs/serialbinning_vs_openmp_vs_MPI.png Graphic file (type png)
+
+<use graphs/serialbinning_vs_openmp_vs_MPI.png>
+Package pdftex.def Info: graphs/serialbinning_vs_openmp_vs_MPI.png used on inpu
+t line 148.
+(pdftex.def)             Requested size: 469.75502pt x 279.386pt.
+ [6] [7 <./graphs/MPI_speedup.png> <./graphs/MPI_weak_scaling.png>] [8 <./graph
+s/MPI_strong_scaling.png> <./graphs/serialbinning_vs_openmp_vs_MPI.png>] [9]
+<graphs/gpu_binning_vs_gpu_serial.png, id=148, 749.6808pt x 551.1792pt>
 File: graphs/gpu_binning_vs_gpu_serial.png Graphic file (type png)
 
 <use graphs/gpu_binning_vs_gpu_serial.png>
 Package pdftex.def Info: graphs/gpu_binning_vs_gpu_serial.png used on input lin
-e 165.
-(pdftex.def)             Requested size: 375.80544pt x 276.3038pt.
+e 187.
+(pdftex.def)             Requested size: 469.75502pt x 345.37764pt.
 
-<graphs/serial_openmp_gpu.png, id=117, 749.6808pt x 551.1792pt>
+<graphs/serial_openmp_gpu.png, id=149, 749.6808pt x 551.1792pt>
 File: graphs/serial_openmp_gpu.png Graphic file (type png)
 
 <use graphs/serial_openmp_gpu.png>
-Package pdftex.def Info: graphs/serial_openmp_gpu.png used on input line 172.
-(pdftex.def)             Requested size: 375.80544pt x 276.3038pt.
+Package pdftex.def Info: graphs/serial_openmp_gpu.png used on input line 194.
+(pdftex.def)             Requested size: 469.75502pt x 345.37764pt.
 
-
-LaTeX Warning: Reference `fig:gpu-all' on page 6 undefined on input line 177.
-
-[6 <./graphs/gpu_binning_vs_gpu_serial.png>] [7 <./graphs/serial_openmp_gpu.png
->]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 194.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 194.
+<graphs/all.png, id=150, 917.829pt x 545.8794pt>
+File: graphs/all.png Graphic file (type png)
+ <use graphs/all.png>
+Package pdftex.def Info: graphs/all.png used on input line 201.
+(pdftex.def)             Requested size: 469.75502pt x 279.386pt.
+ [10 <./graphs/gpu_binning_vs_gpu_serial.png>] [11 <./graphs/serial_openmp_gpu.
+png>]
+[12 <./graphs/all.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 223.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 223.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 194.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 194.
-
-
-Package rerunfilecheck Warning: File `report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `report.out':
-(rerunfilecheck)             Before: D24B409D5697AF1A2D7B6FB59801F607;912
-(rerunfilecheck)             After:  2A757733AB507667024300B54C924FDB;816.
-
-LaTeX Warning: There were undefined references.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 223.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 223.
+Package rerunfilecheck Info: File `report.out' has not changed.
+(rerunfilecheck)             Checksum: 2A757733AB507667024300B54C924FDB;816.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 194.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 223.
  ) 
 Here is how much of TeX's memory you used:
- 20773 strings out of 493089
- 405465 string characters out of 6134842
- 498812 words of memory out of 5000000
- 23826 multiletter control sequences out of 15000+600000
- 12918 words of font info for 50 fonts, out of 8000000 for 9000
+ 20803 strings out of 493089
+ 406218 string characters out of 6134842
+ 500979 words of memory out of 5000000
+ 23845 multiletter control sequences out of 15000+600000
+ 12611 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,7n,71p,1001b,352s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{subsection.5.3} has been referenced but does not 
-exist, replaced by a fixed one
-
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
-live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texl
-ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texli
-ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive
-/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2
-015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/201
-5/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2015/t
-exmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on report.pdf (7 pages, 577071 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/te
+xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2015
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2015/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/tex
+mf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on report.pdf (12 pages, 1092307 bytes).
 PDF statistics:
- 167 PDF objects out of 1000 (max. 8388607)
- 137 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
- 163 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 214 PDF objects out of 1000 (max. 8388607)
+ 167 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 180 words of extra memory for PDF output out of 10000 (max. 10000000)
 

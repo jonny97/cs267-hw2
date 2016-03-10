@@ -68,7 +68,7 @@ Figure \ref{fig:serial-on} shows that our serial binning algorithm follows linea
 
 \begin{figure}
 	\centering
- \includegraphics[width=0.8\textwidth]{graphs/serial_binning_vs_naive.png}
+ \includegraphics[width=\textwidth]{graphs/serial_binning_vs_naive.png}
   \caption{A plot in log-log scale that shows serial without binning runs on $O(n^2)$ time and serial with binning runs in $O(n)$ time.}
   \label{fig:serial-on}
 \end{figure}
@@ -86,21 +86,21 @@ Figure \ref{fig:openmp-on} shows considerable speedup of our OpenMP implementati
 
 \begin{figure}
 	\centering
-\includegraphics[width=0.8\textwidth]{graphs/serial_binning_vs_openMP_12thr.png}
+\includegraphics[width=\textwidth]{graphs/serial_binning_vs_openMP_12thr.png}
   \caption{$O(n)$ scaling of the OpenMP implementation with 12 threads compared to the serial implementation.}
   \label{fig:openmp-on}
 \end{figure}
 
 \begin{figure}
 	\centering
-\includegraphics[width=0.8\textwidth]{graphs/openmp_strong_scaling.png}
+\includegraphics[width=\textwidth]{graphs/openmp_strong_scaling.png}
   \caption{Strong scaling of the OpenMP implementation.}
   \label{fig:openmp-strong}
 \end{figure}
 
 \begin{figure}
 	\centering
-\includegraphics[width=0.8\textwidth]{graphs/weak_scaling.png}
+\includegraphics[width=\textwidth]{graphs/weak_scaling.png}
   \caption{Weak scaling of the OpenMP implementation.}
   \label{fig:openmp-weak}
 \end{figure}
@@ -110,29 +110,51 @@ Figure \ref{fig:openmp-strong} shows the strong scaling of our OpenMP implementa
 \section{MPI Implementation}
 
 \subsection{Communication between nodes}
-A description of the communication you used in the distributed memory implementation.
+Let us define $B$ as the number of bins, and $b = \sqrt{B}$. 
+We deploy the bins as b $\times$ b distribution, which is just like a grid. Then we divide them by row. Suppose we have p processors, each processor will have $\frac{b^2}{p} = \frac{B}{p}$ bins.
+We use the root node (rank is zero) to initiate the particles and then use MPI\_Scatterv to scatter the particles to all the nodes. Concretely, if a certain particle ($pt$) belongs to a bin ($bi$), and $bi$ is owned by a certain node ($nd$), then $pt$ will only be sent to $nd$.
+In each step, we need to make the bins in boundary exchange some particles with the bins in neighbor processor's boundary.  We use MPI\_Ibsend to conduct this kind of communication. For more details, please check exchange\_neighbors.
+Because we have got the boundary information from the neighboring node, we can conduct force computation on each local node.
+Each node will get its own $davg$,  $navg$, $dmin$ variables. Then we will use MPI\_Reduce to get the global variables $rdavg$,  $rnavg$, $rdmin$ by MPI\_SUM, MPI\_SUM, and MPI\_MIN respectively.
 
 \subsection{Results}
+The speedup MPI implementation over serial version can be found in Fig. \ref{fig:mpi-speedup}.
+The weak scaling results of MPI implementation can be found in Fig. \ref{fig:mpi-weak}.
+The strong scaling results of MPI implementation can be found in Fig. \ref{fig:mpi-strong}.
+The performance comparison among serial version, OpenMP version, and MPI version can be found in Fig. \ref{fig:serial-openmp-mpi}.
+The performance comparison among all the implementations can be found in Fig. \ref{fig:all}.
+The experimental setting is the same with the OpenMP version.  On average, the maximum speed is achieved with 24 processes for number of particles between 500 to 128,000. The simulation time for MPI is $O(n^{0.749})$, while OpenMP is $O(n^{0.916})$ and the serial is $O(n^{1.256})$. 
 
 \begin{figure}
-%  \includegraphics[width=\textwidth]{mpi-on.png}
-  \caption{$O(n)$ scaling of the MPI implementation.}
-  \label{fig:mpi-on}
+  \includegraphics[width=\textwidth]{graphs/MPI_speedup.png}
+  %\caption{$O(n)$ scaling of the MPI implementation.}
+  \caption{Speedup of MPI implementation.}
+  \label{fig:mpi-speedup}
 \end{figure}
 
 \begin{figure}
-%  \includegraphics[width=\textwidth]{mpi-weak.png}
+\includegraphics[width=\textwidth]{graphs/MPI_weak_scaling.png}
   \caption{Weak scaling of the MPI implementation.}
   \label{fig:mpi-weak}
 \end{figure}
 
 \begin{figure}
-%  \includegraphics[width=\textwidth]{mpi-strong.png}
+\includegraphics[width=\textwidth]{graphs/MPI_strong_scaling.png}
   \caption{Strong scaling of the MPI implementation.}
   \label{fig:mpi-strong}
 \end{figure}
 
+\begin{figure}
+\includegraphics[width=\textwidth]{graphs/serialbinning_vs_openmp_vs_MPI.png}
+  \caption{Serial vs OpenMP vs MPI.}
+  \label{fig:serial-openmp-mpi}
+\end{figure}
+
 \subsection{Discussion}
+
+From Fig. \ref{fig:serial-openmp-mpi} and Fig. \ref{fig:all} we can observe that MPI achieves better scaling efficiency than OpenMP and GPUs. This means explicit communication behavior does help us to design more scalable software. Note that our implementation is a 1-D partition version, the 2-D partition version may have better scaling efficiency.
+
+The major challenges we faced when writing the MPI code is the communication part, which took us a lot of efforts to manage the sender and receiver in the right way. We use MPI\_Ibsend to conduct a nonblocking buffered sending communication, which is critical for our implementation. In order to design the efficient communication model, we need to re-design some data structures. On the other hand, we use the c++ STL's builtin vector to manage the particle, which is very efficient because we can not predict the number of particles each processor own every step so that we need to dynamically update the array at runtime . Also, debugging MPI code is still non-trivial and tedious. The NERSC tools are useful but most of time we use the printf to get the runtime information.
 
 %\begin{figure}
 %  \includegraphics[width=\textwidth]{speedup.png}
@@ -162,16 +184,23 @@ Before that, we tried avoiding the need to maintain bins by removing the explici
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{graphs/gpu_binning_vs_gpu_serial.png}
+  \includegraphics[width=\textwidth]{graphs/gpu_binning_vs_gpu_serial.png}
   \caption{Log-log scale plot that shows GPU with binning versus GPU with binning performance.}
   \label{fig:gpu-compare}
 \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{graphs/serial_openmp_gpu.png}
+  \includegraphics[width=\textwidth]{graphs/serial_openmp_gpu.png}
   \caption{Log-log scale plot that shows Serial with binning, GPU with binning and OpenMP performance.}
   \label{fig:gpu-all}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{graphs/all.png}
+  \caption{Comparison among all the implementations (Serial vs OpenMP vs MPI vs GPU).}
+  \label{fig:all}
 \end{figure}
 
 We benchmarked the the GPU Naive Code and our GPU binning implementation on the Stampede GPU architecture. Figure~\ref{fig:gpu-compare} shows that our implementation is $O(n^{0.8673})$ fast compared to the naive GPU implementation which is $O(n^{1.3691})$ fast. Figure~~\ref{fig:gpu-all} shows that the GPU code has slightly better performance than the OpenMP. The GPU code is $O(n^{0.8673})$ fast while the OpenMP code is $O(n^{0.9161})$ fast. 
